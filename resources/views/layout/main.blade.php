@@ -17,12 +17,20 @@
 
             <nav class='ml-auto justify-center items-center flex text-gray-50 text-bold'>
                 <ul class='flex gap-10'>
-                    <li class='hover:backdrop-blur hover:bg-white/8 hover:shadow transition-all ease-in-out duration-100 p-2 rounded cursor-pointer'><a href="/">HOME</a></li>
+                    <li class='hover:backdrop-blur hover:bg-white/8 hover:shadow transition-all ease-in-out duration-100 p-2 rounded cursor-pointer'>
+                        <a href="/">HOME</a>
+                    </li>
                     <li class='hover:backdrop-blur hover:bg-white/8 hover:shadow transition-all ease-in-out duration-100 p-2 rounded cursor-pointer'>SERVIÇOS</li>
                     <li class='hover:backdrop-blur hover:bg-white/8 hover:shadow transition-all ease-in-out duration-100 p-2 rounded cursor-pointer'>CONTATOS</li>
                     <li class='hover:backdrop-blur hover:bg-white/8 hover:shadow transition-all ease-in-out duration-100 p-2 rounded cursor-pointer'>SOBRE</li>
+                    @auth
+                    <li class='hover:backdrop-blur hover:bg-white/8 hover:shadow transition-all ease-in-out duration-100 p-2 rounded cursor-pointer'>
+                        <a href="/dashboard">PAINEL</a>
+                    </li>
+                    @endauth
                 </ul>
             </nav>
+
         </header>
         @yield('content')
         <footer></footer>

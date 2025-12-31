@@ -23,7 +23,7 @@
 
         <div>
             <div class="container flex justify-center text-white ">
-                <form method="POST" action="{{route('client.store')}}"  class="bg-white/10 w-115 shadow-2xl p-3 mb-35 rounded-2xl backdrop-blur-lg ">
+                <form method="POST" action="{{route('client.register')}}"  class="bg-white/10 w-115 shadow-2xl p-3 mb-35 rounded-2xl backdrop-blur-lg ">
                     @csrf
                     <h1 class='text-center  text-4xl font-bold'>REGISTRAR</h1>
 
@@ -82,7 +82,7 @@
 
                     <div class="container">
                         <div class=" justify-center items-center text-center flex-col flex gap-3 p-3">
-                            <span class='p-1'>Já possui uma conta? faça <a href="" class='hover:bg-gray-50/20 hover:backdrop-blur-2xl rounded hover:shadow transition-all'>login</a> </span>
+                            <span class='p-1'>Já possui uma conta? faça <a href="/login" class='hover:bg-gray-50/20 hover:backdrop-blur-2xl rounded hover:shadow transition-all'>login</a> </span>
                             <button class="font-semibold rounded-4xl p-2  w-80 bg-white transition-all ease-in-out hover:scale-105 cursor-pointer text-black" type="submit">Registrar</button>
                         </div>
                     </div>

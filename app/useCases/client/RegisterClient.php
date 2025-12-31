@@ -8,7 +8,6 @@ class RegisterClient
 {
     public function execute(array $data): void
     {
-        // Lógica para registrar um cliente usando os dados fornecidos
         $data['telephone'] = preg_replace('/\D/', '', $data['telephone']);
         $data['role'] = 'client';
         $data['cpf'] = preg_replace('/\D/', '', $data['cpf']);

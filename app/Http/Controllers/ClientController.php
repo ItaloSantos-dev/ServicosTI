@@ -7,13 +7,8 @@ use Exception;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
-{
-    private RegisterClient $registerClient;
-
-    public function __construct()
-    {
-        $this->registerClient = new RegisterClient();
-    }
+{    
+    
     /**
      * Display a listing of the resource.
      */
@@ -27,7 +22,6 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('client.create');
     }
 
     /**
@@ -36,19 +30,6 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         
-        $credentials = $request->validate([
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'cpf' => 'required|string|unique:users|cpf',
-            'date_birth' => 'required|date',
-            'telephone' => 'required|string|size:15|unique:users|celular_com_ddd',
-        ]);
-        $this->registerClient->execute($credentials);
-        
-
-        return redirect()->route('client.create')->with('info', 'Registro criado com sucesso! Agora realize Login');
     }
 
 

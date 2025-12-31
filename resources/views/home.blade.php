@@ -20,14 +20,25 @@
         </div>
     </div>
 
-    <div class='container flex  mx-auto w-100 justify-center '>
-        <div class='flex gap-x-15 text-gray-200 text-2xl'>
-            <a href="/register" class='cursor-pointer hover:bg-linear-to-t from-purple-600 to-blue-700 p-3  transition-all hover:scale-105 hover:shadow-lg hover:backdrop-blur-2xl hover:rounded-2xl btnBottom'>Cadastrar-se</a>
-
-            <a href="" class='cursor-pointer hover:bg-linear-to-t from-purple-600/50 to-blue-700 p-2 transition-all hover:scale-105 hover:shadow-lg hover:backdrop-blur-2xl hover:rounded-2xl btnBottom'>Login</a>
-        </div>
-    </div>
-
+    @auth
     
+        <div class='container flex  mx-auto w-100 justify-center '>
+            <form method="post" action="{{route('user.logout')}}"  class='flex gap-x-15 text-gray-200 text-2xl'>
+                @csrf
+                <button class='cursor-pointer hover:bg-linear-to-t from-purple-600 to-blue-700 p-3  transition-all hover:scale-105 hover:shadow-lg hover:backdrop-blur-2xl hover:rounded-2xl btnBottom'>Sair</button>
+            </form>
+        </div>
+    @endauth
+    @guest
+        <div class='container flex  mx-auto w-100 justify-center '>
+            <div class='flex gap-x-15 text-gray-200 text-2xl'>
+                <a href="/register" class='cursor-pointer hover:bg-linear-to-t from-purple-600 to-blue-700 p-3  transition-all hover:scale-105 hover:shadow-lg hover:backdrop-blur-2xl hover:rounded-2xl btnBottom'>Cadastrar-se</a>
+
+                <a href="/login" class='cursor-pointer hover:bg-linear-to-t from-purple-600/50 to-blue-700 p-2 transition-all hover:scale-105 hover:shadow-lg hover:backdrop-blur-2xl hover:rounded-2xl btnBottom'>Login</a>
+            </div>
+        </div>
+    @endguest 
+
+
 </main>
 @endsection
