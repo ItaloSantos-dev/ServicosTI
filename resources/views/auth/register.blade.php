@@ -23,7 +23,7 @@
 
         <div>
             <div class="container flex justify-center text-white ">
-                <form method="POST" action="{{route('client.register')}}"  class="bg-white/10 w-115 shadow-2xl p-3 mb-35 rounded-2xl backdrop-blur-lg ">
+                <form method="POST" action="{{route('register')}}"  class="bg-white/10 w-115 shadow-2xl p-3 mb-35 rounded-2xl backdrop-blur-lg ">
                     @csrf
                     <h1 class='text-center  text-4xl font-bold'>REGISTRAR</h1>
 

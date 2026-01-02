@@ -24,9 +24,26 @@ class User extends Authenticatable
         'date_birth',
         'telephone',
         'role',
-        'email',
+        'email', 
         'password',
     ];
+    
+
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
+
+
+    public function roleNumber(){
+        if($this->tipo=='client') return 0;
+        if($this->tipo=='employe') return 1;
+    }
 
     /**
      * The attributes that should be hidden for serialization.

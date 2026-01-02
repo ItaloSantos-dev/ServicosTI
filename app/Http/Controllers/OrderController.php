@@ -2,37 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use App\Models\Employee;
-use App\Models\Service_Types;
 use App\Models\User;
+
+
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class OrderController extends Controller
 {
-    public function DashBoard(Request $request){
-        $userRoler = $request->user()->roleNumber();
-        if($userRoler==0){
-            $clientLoged = $request->user()->with('client.orders')->first();
-            return view('user.client.dashboard', compact('clientLoged'));
-        }
-        else{
-            $employeeLoged = Employee::where('user_id',$request->user()->id);
-            $employeeRoler = $employeeLoged->roleNumber();
-            if($employeeRoler == 0){
-                //retornar dash funcionario comum
-            }
-            else{
-                
-            }
-        }
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $clientWithOrders = auth()->user()->load('client.orders.TypeOrder');
+        return view('user.client.orders', compact('clientWithOrders'));
     }
 
     /**
@@ -40,6 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**

@@ -34,7 +34,7 @@ class AuthController extends Controller
         $this->registerClient->execute($credentials);
         
 
-        return redirect()->route('client.create')->with('info', 'Registro criado com sucesso! Agora realize Login');
+        return redirect()->route('registerForms')->with('info', 'Registro criado com sucesso! Agora realize Login');
     }
 
     public function ShowLoginForms()
@@ -52,7 +52,7 @@ class AuthController extends Controller
             return redirect()->route('home');
         }
         else{
-            return redirect()->route('user.login')->with('info', 'Email ou senha inválido');
+            return redirect()->route('login')->with('info', 'Email ou senha inválido');
         }
     }
 
