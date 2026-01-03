@@ -6,6 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $fillable = [  
+        'client_id',
+        'type_id',
+        'description',
+        'address',
+        'status',
+        'order_date',
+        'scheduling_date',
+        'completion_date',
+        'cancellation_date',
+        'reason_for_cancellation',
+        'rating',
+    ];
+
     public function TypeOrder(){
         return $this->belongsTo(OrderTypes::class,'type_id');
     }

@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderTypes;
 use App\Models\User;
-
-
+use App\useCases\order\RegisterOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class OrderController extends Controller
 {
+    private RegisterOrder $registerOrder;
+
+    public function __construct() {
+        $this->registerOrder = new RegisterOrder();
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clientWithOrders = auth()->user()->load('client.orders.TypeOrder');
+        $clientWithOrders = $request->user()->load('client.orders.TypeOrder');
         return view('user.client.orders', compact('clientWithOrders'));
     }
 
@@ -23,7 +30,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $orderTypes = OrderTypes::all();
+        return view('user.client.newOrder', compact('orderTypes'));
     }
 
     /**
@@ -31,8 +39,24 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!$request->user()->checkPassword($request->password)){
+            return redirect()->back()->with('info', 'Senha incorreta');
+        }
+        $credentials = $request->validate([
+            'type_id'=>'required|numeric',
+            'description'=>'required|string',
+            'address'=>'required|string'
+        ]);
+        $newOrder =  $this->registerOrder->execute($credentials);
+        if(!$newOrder){
+            dd('faiou');
+            return redirect()->back()->with('info', 'falha ao criar pedido');
+        }
+        return redirect()->route('client.orders');
+
+
     }
+
 
     /**
      * Display the specified resource.

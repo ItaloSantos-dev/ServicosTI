@@ -21,17 +21,17 @@
     <div class="max-w-6xl mx-auto p-8">
         <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl  p-6  border flex flex-col  border-purple-200">
 
-            <div class="flex justify-beetwen items-center mb-3">
+            <div class="flex justify-beetwen items-center mb-3 ">
                 <h1 class="font-bold text-black text-3xl text-center">Pedidos</h1>
-                <button class= "ml-auto bg-white text-black font-bold py-3 px-6 rounded-lg hover:bg-purple-100 border-2 border-purple-300 hover:border-purple-500 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-transl ate-y-0.5">
+                <a href="/orders/create" class= "ml-auto bg-white text-black font-bold py-3 px-6 rounded-lg hover:bg-purple-100 border-2 border-purple-300 hover:border-purple-500 transition-all  duration-200 shadow-lg hover:shadow-xl transform hover:-transl ate-y-0.5">
                     Novo Pedido
-                </button>
+                </a>
             </div>
 
 <!-- bg-purple-100 rounded-lg p-4 border border-purple-200 cursor-pointer transition-all duration-300 hover:bg-purple-200 hover:shadow-lg hover:scale-105 hover:border-purple-400 transform -->
-            <div class="overflow-scroll lg:max-h-[65vh] p-8">
+            <div class="overflow-scroll lg:max-h-[65vh] p-8 ">
                 @foreach($clientWithOrders->client->orders as $order)
-                    <div class="bg-white rounded-[20px] p-6 mb-6 shadow-lg border  transition-all duration-300 hover:bg-purple-200 hover:shadow-lg hover:scale-105 hover:border-purple-400 transform  border-purple-200">
+                    <div class="bg-white rounded-[20px] p-6 mb-6 shadow-lg border  transition-all duration-300 hover:bg-purple-200 hover:shadow-lg hover:scale-105 hover:border-purple-400 transform  border-purple-200 " >
                         <div class="flex justify-between items-center">
                             <div class="">
                                 <div class="text-lg font-semibold text-purple-700 mb-2">Pedido {{$order->id}}</div>
@@ -50,7 +50,7 @@
                             @endif
 
                             <div>
-                                <button onclick="showOrderDetails({{$order->id}})" class="px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors ml-4 cursor-pointer hover:shadow-2xl ">
+                                <button onclick="showOrderDetails('{{$order->id}}')" class="px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors ml-4 cursor-pointer hover:shadow-2xl ">
                                     Ver mais
                                 </button>
                             </div>
@@ -89,7 +89,7 @@
     </div>
 
     <!-- Overlay com Blur -->
-    <div id="order-overlay" class="fixed inset-0 bg-black/50 bg-opacity-60 backdrop-blur-md z-50   items-center justify-center p-4">
+    <div id="order-overlay" class="fixed inset-0 bg-black/50 bg-opacity-60 backdrop-blur-md z-50  hidden items-center justify-center p-4">
 
         <div class="bg-white rounded-[20px] p-8 shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             
@@ -170,7 +170,7 @@
         }
 
         function CopyDetails(orderId) {
-            document.getElementById('orderId').innerText="Pedido #" + (orderId+1);
+            document.getElementById('orderId').innerText="Pedido #" + orderId;
 
             document.getElementById('detailTypeOrder').innerText = document.getElementById('typeOrderValue'+orderId).textContent;
 

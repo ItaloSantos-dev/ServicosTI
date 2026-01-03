@@ -19,3 +19,9 @@ Route::post('/logout', [AuthController::class,'Logout'])->name('logout');
 Route::get('/dashboard', [UserController::class, 'DashBoard'])->middleware('auth')->name('user.dashboard');
 
 Route::get('/orders', [OrderController::class, 'index'])->middleware('auth')->name('client.orders');
+
+Route::get('/orders/create', [OrderController::class, 'create'])->middleware('auth')->name('order.create');
+
+Route::post('/orders/create', [OrderController::class, 'store'])->middleware('auth')->name('order.store');
+
+

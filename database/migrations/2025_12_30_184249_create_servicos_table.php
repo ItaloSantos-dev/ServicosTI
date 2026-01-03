@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('address');
             $table->enum('status', ['in_analysis', 'scheduled', 'completed', 'canceled'])->default('in_analysis');
             $table->dateTime('order_date'); //Data que fez o pedido
-            $table->dateTime('scheduling_date')->nullable();//Data que vai ser feito o serviço, cliente escolheu
+            $table->dateTime('scheduling_date')->nullable();//Data que vai ser feito o serviço, admin escolheu
             $table->dateTime('completion_date')->nullable();//Data de conclusão do serviço
             $table->dateTime('cancellation_date')->nullable();//Data de cancelamento
             $table->text('reason_for_cancellation')->nullable();//motivo do cancelamento
