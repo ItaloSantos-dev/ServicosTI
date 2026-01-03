@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\OrderTypes;
 use App\Models\User;
+use App\useCases\order\CancellationOrder;
 use App\useCases\order\RegisterOrder;
+use App\useCases\order\UpdateOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,10 +15,15 @@ use Illuminate\Support\Facades\Hash;
 class OrderController extends Controller
 {
     private RegisterOrder $registerOrder;
+    private UpdateOrder $updateOrder;
+    private CancellationOrder $cancellationOrder;
 
     public function __construct() {
         $this->registerOrder = new RegisterOrder();
-    }
+        $this->updateOrder = new UpdateOrder();
+        $this->cancellationOrder = new CancellationOrder();
+        
+    }                       
     /**
      * Display a listing of the resource.
      */
@@ -39,14 +47,17 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        if(!$request->user()->checkPassword($request->password)){
-            return redirect()->back()->with('info', 'Senha incorreta');
-        }
+        $password = $request->validate(['password'=>'required']);
+
         $credentials = $request->validate([
             'type_id'=>'required|numeric',
             'description'=>'required|string',
             'address'=>'required|string'
         ]);
+        if(!$request->user()->checkPassword($password['password'])){
+            return redirect()->back()->with('info', 'Senha incorreta');
+        }
+        
         $newOrder =  $this->registerOrder->execute($credentials);
         if(!$newOrder){
             dd('faiou');
@@ -63,7 +74,7 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -71,7 +82,9 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $order = Order::with('TypeOrder')->find($id);
+        $orderTypes = OrderTypes::all();
+        return view('user.client.updateOrder', compact('order', 'orderTypes'));
     }
 
     /**
@@ -79,14 +92,40 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $password = $request->validate(['password'=>'required']);
+        
+        if(!$request->user()->checkPassword($password['password'])){
+            return redirect()->back()->with('info', 'Senha incorreta');
+        }
+        $credentials = $request->validate([
+            'type_id'=>'required|numeric',
+            'description'=>'required|string',
+            'address'=>'required|string'
+        ]);
+        if(!$this->updateOrder->execute($id, $credentials)){
+             redirect()->back()->with('info', 'falha ao editar pedido');
+        }
+        return redirect()->route('client.orders');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $credentials = $request->validate([
+            'password'=>'required',
+            'reason_for_cancellation'=>'required|string',
+        ]);
+        if(!$request->user()->checkPassword($credentials['password'])){
+            return redirect()->back()->with('info', 'Senha incorreta');
+        }
+        
+        if(!$this->cancellationOrder->execute($id, $credentials)){
+            return redirect()->back()->with('info', 'Falha ao cancelar pedido');
+        }        
+        return redirect()->route('client.orders');
+
     }
 }

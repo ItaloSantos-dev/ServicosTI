@@ -49,6 +49,7 @@
                             </div>
                             @endif
 
+
                             <div>
                                 <button onclick="showOrderDetails('{{$order->id}}')" class="px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors ml-4 cursor-pointer hover:shadow-2xl ">
                                     Ver mais
@@ -58,11 +59,13 @@
                     </div>
 <!--Detalhes ocultos -->
                     <div class="hidden">
+                        <div id="orderIdValue{{$order->id}}">{{$order->id}}</div>
                         <div id="typeOrderValue{{$order->id}}">{{$order->TypeOrder->name}}</div>
                         <div id="orderDescValue{{$order->id}}">{{$order->description}}</div>
                         <div id="orderAddressValue{{$order->id}}">{{$order->address}}</div>
                         <div id="orderStatusValue{{$order->id}}">{{$order->TranslateStatus()}}</div>
                         <div id="orderDateValue{{$order->id}}">{{$order->order_date}}</div>
+
 
                         @if($order->TranslateStatus()=='AGENDADO')
                             <div id="schedulingDateValue{{$order->id}}">{{$order->scheduling_date}}</div>
@@ -76,6 +79,9 @@
                             <div id="cancellationDateValue{{$order->id}}">{{$order->cancellation_date}}</div>
                             <div id="cancellationReason{{$order->id}}">{{$order->reason_for_cancellation}}</div>
                         @endif
+
+
+                        
                         
                         
 
@@ -103,7 +109,10 @@
                 </button>
             </div>
 <!-- grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 -->
-            <div id="orderdetails" class="flex flex-col gap-2 ">
+            <div id="orderdetails" class="flex flex-col gap-2  ">
+
+                <div class="hidden" id="detailOrderId"></div>
+
                 <div class="flex gap-20 justify-center items-center">
                     <div class="flex flex-col gap-2">
                         <span class="text-sm font-bold text-purple-600">Tipo</span>
@@ -154,6 +163,12 @@
                         <div id="detailCancellationReasonValue" class="text-base text-purple-400 italic p-4 bg-purple-50 rounded-lg">-</div>
                     </div>
                 </div>
+
+                <div class="hidden"id="updateButton">
+                    <div class="flex justify-center">
+                        <button onclick="AcessarRota()" class="px-6 py-3 bg-gray-500 text-white font-semibold cursor-pointer rounded-[20px] shadow-lg hover:bg-gray-600 transition-colors">Editar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -171,6 +186,9 @@
 
         function CopyDetails(orderId) {
             document.getElementById('orderId').innerText="Pedido #" + orderId;
+
+            document.getElementById('detailOrderId').innerText=orderId;
+
 
             document.getElementById('detailTypeOrder').innerText = document.getElementById('typeOrderValue'+orderId).textContent;
 
@@ -214,6 +232,15 @@
                 document.getElementById('cancellationDate').classList.add('hidden');
                 document.getElementById('cancellationReason').classList.add('hidden');
             }
+
+            if(!completionValue && !cancelationValue){
+                document.getElementById('updateButton').classList.remove('hidden');
+
+            }
+            else{
+                document.getElementById('updateButton').classList.add('hidden');
+            }
+
         }
 
         function hideOrderDetails() {
@@ -229,6 +256,17 @@
                 hideOrderDetails();
             }
         });
+
+        function AcessarRota(){
+            
+            const id = document.getElementById('detailOrderId').textContent;
+            console.log(id);
+            
+            
+            window.location.href = `/order/${id}`;
+
+        }
+
     </script>
 @endsection
 @endsection
